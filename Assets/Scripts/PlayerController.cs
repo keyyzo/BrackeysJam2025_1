@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         playerMovement.MovePlayer(playerInput.InputVector);
+        playerMovement.JumpPlayer(playerInput.JumpInput);
     }
 
     void InitialisePlayerComponents()
