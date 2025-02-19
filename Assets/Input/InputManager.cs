@@ -58,6 +58,6 @@ public class InputManager : MonoBehaviour
 
     public bool GetPlayerSprinting()
     {
-        return playerControls.Player.Sprint.triggered;
+        return playerControls.Player.Sprint.IsPressed();
     }
 }

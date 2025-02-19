@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     PlayerMovement playerMovement;
     PlayerAudio playerAudio;
+    Interactor interactor;
 
 
     private void Awake()
@@ -29,8 +30,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerMovement.MovePlayer(playerInput.InputVector);
         playerMovement.JumpPlayer(playerInput.JumpInput);
+        playerMovement.PlayerSprint(playerInput.SprintInput);
+        playerMovement.MovePlayer(playerInput.InputVector);
+        interactor.ActivateInteract(playerInput.InteractInput);
+        
     }
 
     void InitialisePlayerComponents()
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerMovement = GetComponent<PlayerMovement>();
         playerAudio = GetComponent<PlayerAudio>();
+        interactor = GetComponent<Interactor>();
 
         
     }

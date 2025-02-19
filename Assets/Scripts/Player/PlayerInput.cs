@@ -15,6 +15,8 @@ public class PlayerInput : MonoBehaviour
     private float mouseYInput;
 
     private bool jumpInput;
+    private bool sprintInput;
+    private bool interactInput;
 
     // Public Properties
 
@@ -22,6 +24,8 @@ public class PlayerInput : MonoBehaviour
     public Vector2 LookInputVector => lookInputVector;
 
     public bool JumpInput => jumpInput;
+    public bool SprintInput => sprintInput;
+    public bool InteractInput => interactInput;
     
     // Cached Variables
 
@@ -38,6 +42,8 @@ public class PlayerInput : MonoBehaviour
         HandleMovementInput();
         HandleLookInput();
         HandleJumpInput();
+        HandleSprintInput();
+        HandleInteractInput();
     }
 
     public void HandleMovementInput()
@@ -63,6 +69,16 @@ public class PlayerInput : MonoBehaviour
     void HandleJumpInput()
     { 
         jumpInput = inputManager.GetPlayerJumped();
+    }
+
+    void HandleSprintInput()
+    { 
+        sprintInput = inputManager.GetPlayerSprinting();
+    }
+
+    void HandleInteractInput()
+    {
+        interactInput = inputManager.GetPlayerInteracted(); 
     }
 
 }

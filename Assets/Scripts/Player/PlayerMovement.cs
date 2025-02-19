@@ -98,9 +98,12 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(movement);
 
-        // TODO: May need to implement a way to force player to the ground if not done outside of this function
+        
     }
 
+    /// <summary>
+    /// Activates the player jump mechanic, by passing in a variable from input to determine when to jump
+    /// </summary>
     public void JumpPlayer(bool jumpTriggered)
     {
         if (jumpTriggered && isGrounded)
@@ -111,12 +114,34 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Activates the player sprint mechanic, by passing in a variable from input to determine when to sprint
+    /// </summary>
+    public void PlayerSprint(bool sprintTriggered)
+    {
+        if (sprintTriggered && !isSprinting)
+        {
+            isSprinting = true;
+            Debug.Log("Sprinting");
+        }
+
+        else if (!sprintTriggered)
+        {
+            isSprinting = false;
+            Debug.Log("Walking");
+        }
+        
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(groundCheck.position, groundDistance);
     }
 
+    /// <summary>
+    /// Applies gravity to the player, to ensure whenever not jumping the player is on the ground
+    /// </summary>
     void ApplyGravity()
     {
         
@@ -125,18 +150,22 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y += gravityStrength * gravityMultiplier * Time.deltaTime;
 
-            Debug.Log("Stronger Gravity");
+            //Debug.Log("Stronger Gravity");
         }
 
         else
         {
             velocity.y += gravityStrength * Time.deltaTime;
-            Debug.Log("Normal Gravity");
+            //Debug.Log("Normal Gravity");
         }
 
         characterController.Move(velocity * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Checks to see if the player is touching the ground with a negative velocity,
+    /// if so sets the velocity to a specified value to avoid possible bugs
+    /// </summary>
     void GroundedReset()
     {
         if (GroundedCheck() && velocity.y < 0f)
@@ -145,6 +174,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns a value based on whether the player is touching the ground or not
+    /// </summary>
     bool GroundedCheck()
     {
         if (Physics.CheckSphere(groundCheck.position, groundDistance))
