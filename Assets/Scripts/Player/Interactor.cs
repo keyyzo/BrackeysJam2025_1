@@ -48,13 +48,16 @@ public class Interactor : MonoBehaviour
     void SetCurrentInteractable(IInteractable newInteractable)
     { 
         currentInteractable = newInteractable;
+        currentInteractable.InteractionPrompt();
     }
 
     void DisableCurrentInteractable()
     {
         if (currentInteractable != null)
         {
+            currentInteractable.CancelInteractionPrompt();
             currentInteractable = null;
+
         }
     }
 
