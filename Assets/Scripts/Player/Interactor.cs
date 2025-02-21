@@ -6,9 +6,13 @@ public class Interactor : MonoBehaviour
 
     [SerializeField] Transform interactorSource;
     [SerializeField] float interactorDistance;
+    [SerializeField] Transform objectHoldPosition;
+
+    bool hasObjectInHand = false;
+
 
     IInteractable currentInteractable;
-
+    ObjectPickupDrop currentObjectPickupDrop;
 
 
     private void Update()
@@ -25,25 +29,33 @@ public class Interactor : MonoBehaviour
         {
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactableObject))
             {
-                Debug.Log("An interactable object is within reach");
 
                 SetCurrentInteractable(interactableObject);
+            }
+
+            else if (hitInfo.collider.gameObject.TryGetComponent(out ObjectPickupDrop pickupableObject) && !hasObjectInHand)
+            { 
+                SetCurrentPickupable(pickupableObject);
+                Debug.Log("Pickupable Object Found");
             }
 
             else
             {
                 DisableCurrentInteractable();
-                Debug.Log("No interactable object within reach");
+                DisableCurrentPickupable();
+
             }
         }
 
         else
         { 
             DisableCurrentInteractable();
-            Debug.Log("No interactable object within reach");
+            DisableCurrentPickupable();
         }
 
     }
+
+    //--- INTERACTABLE FUNCTIONS ---//
 
     void SetCurrentInteractable(IInteractable newInteractable)
     { 
@@ -71,4 +83,56 @@ public class Interactor : MonoBehaviour
 
         
     }
+
+
+    //--- PICKUP AND DROP FUNCTIONS ---//
+
+    void SetCurrentPickupable(ObjectPickupDrop newPickupable)
+    { 
+        currentObjectPickupDrop = newPickupable;
+        
+    }
+
+    void DisableCurrentPickupable()
+    {
+        if (currentObjectPickupDrop != null && !hasObjectInHand)
+        {
+            currentObjectPickupDrop = null;
+        }
+    }
+
+    public void ActivatePickupObject(bool pickupTriggered)
+    {
+        if (pickupTriggered && currentObjectPickupDrop != null && !hasObjectInHand)
+        {
+            PickUpObject();
+        }
+
+        else if (pickupTriggered && currentObjectPickupDrop != null && hasObjectInHand)
+        {
+            DropObject();
+        }
+    }
+
+    void PickUpObject()
+    {
+        if (currentObjectPickupDrop != null)
+        {
+            currentObjectPickupDrop.PickUp(objectHoldPosition);
+            hasObjectInHand = true;
+        }
+        
+    }
+
+    void DropObject()
+    {
+        if (currentObjectPickupDrop != null)
+        {
+            currentObjectPickupDrop.Drop();
+            currentObjectPickupDrop = null;
+            hasObjectInHand = false;
+        }
+    }
+
+    
 }

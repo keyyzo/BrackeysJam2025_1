@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.PlayerSprint(playerInput.SprintInput);
         playerMovement.MovePlayer(playerInput.InputVector);
         interactor.ActivateInteract(playerInput.InteractInput);
+        interactor.ActivatePickupObject(playerInput.InteractInput);
         
     }
 

@@ -122,13 +122,11 @@ public class PlayerMovement : MonoBehaviour
         if (sprintTriggered && !isSprinting)
         {
             isSprinting = true;
-            Debug.Log("Sprinting");
         }
 
         else if (!sprintTriggered)
         {
             isSprinting = false;
-            Debug.Log("Walking");
         }
         
     }
