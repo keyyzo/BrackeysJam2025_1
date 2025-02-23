@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerAudio playerAudio;
     Interactor interactor;
-
+    PlayerHeadBob headBob;
 
     private void Awake()
     {
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.MovePlayer(playerInput.InputVector);
         interactor.ActivateInteract(playerInput.InteractInput);
         interactor.ActivatePickupObject(playerInput.InteractInput);
+        headBob.CalculateHeadbob(playerMovement.CurrentSpeed);
         
     }
 
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerAudio = GetComponent<PlayerAudio>();
         interactor = GetComponent<Interactor>();
-
+        headBob = GetComponent<PlayerHeadBob>();
         
     }
 }

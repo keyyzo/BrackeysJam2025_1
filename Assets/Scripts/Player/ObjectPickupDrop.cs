@@ -20,6 +20,8 @@ public class ObjectPickupDrop : MonoBehaviour
             float lerpSpeed = 10.0f;
 
             Vector3 newPosition = Vector3.Lerp(transform.position, heldPosition.position, Time.deltaTime * lerpSpeed);
+            
+            
 
             rb.MovePosition(newPosition);
         }
@@ -29,6 +31,9 @@ public class ObjectPickupDrop : MonoBehaviour
     { 
         heldPosition = positionToHold;
         rb.useGravity = false;
+        rb.isKinematic = true;
+        rb.linearDamping = 5.0f;
+        rb.angularDamping = 1.0f;
 
 
     }
@@ -37,5 +42,8 @@ public class ObjectPickupDrop : MonoBehaviour
     {
         heldPosition = null;
         rb.useGravity = true;
+        rb.isKinematic = false;
+        rb.linearDamping = 0.0f;
+        rb.angularDamping = 0.05f;
     }
 }

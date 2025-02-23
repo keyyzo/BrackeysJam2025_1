@@ -47,6 +47,10 @@ public class PlayerMovement : MonoBehaviour
     bool isSprinting = false;
     bool isGrounded;
 
+    // Public properties
+
+    public float CurrentSpeed => currentSpeed;
+
     // Cached Variables
 
     private CharacterController characterController;
